@@ -34,7 +34,6 @@ display_upper_case = "Yes"; // [Yes, No]
 display_lower_case = "Yes"; // [Yes, No]
 display_pi4 = "Yes"; // [Yes, No]
 display_hyperpixel = "Yes"; // [Yes, No]
-display_prusa_frame = "Yes"; // [Yes, No]
 
 // Lift the upper case?
 lift_upper_case = "Yes"; // [Yes, No]

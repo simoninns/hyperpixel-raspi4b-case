@@ -130,7 +130,10 @@ module lower_case()
                     move([0.75,0.75,-2]) cuboid([104 - 1.5, 64 - 1.5, 2], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
                     move([2,2,-3]) cuboid([104 - 4, 64 - 4, 4], center=false, fillet = 1, edges = EDGES_Z_ALL);
                     move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
+                    move([101,20,-2]) cuboid([3,28,3], center=false);
                 }
+
+                
 
                 // Clips
                 move([3.5,1,-1.75]) rotate([45,0,0]) cuboid([10,1,1], center=false);
@@ -194,7 +197,7 @@ module upper_case(lift)
                 }
 
                 // Add some addition strength to the front connector columns
-                move([102,31.12,9]) cuboid([1.5,20.75,14]);
+                move([102,31.12,8]) cuboid([1.5,20.75,16]);
                 move([102.25,31.12 - (20.75 /2),16]) rotate([0,-90,0]) right_triangle([1,20.75,1]);
             }
 
@@ -210,6 +213,10 @@ module upper_case(lift)
             difference() {
                 move([0.75,0.75,-3]) cuboid([104 - (0.75 * 2), 64 - (0.75 * 2), 4], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
                 move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
+
+                // Strengthen around USB columns
+                move([102.25,22,0]) cuboid([2,2.5,2]);
+                move([102.25,40.125,0]) cuboid([2,2.75,2]);
             }
 
             // Clip recesses
@@ -246,6 +253,6 @@ module upper_case(lift)
         move([5 + offs1 - 7,0,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
         move([10 + offs2 + 7,0,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
         move([15 + offs2 + 7,0,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
-    }    
+    }
 }
 
