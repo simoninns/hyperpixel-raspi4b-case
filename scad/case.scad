@@ -83,10 +83,18 @@ module lower_case()
                         // Pi stand-offs
                         move([15,4,-3]) {
                             // Internal stand-off, 2.5mm high
-                            move([3.5,3.5,5]) tube(h=2.5, od=6, id=2.8, center=false);
-                            move([3.5 + 58,3.5,5]) tube(h=2.5, od=6, id=2.8, center=false);
-                            move([3.5,3.5 + 49,5]) tube(h=2.5, od=6, id=2.8, center=false);
-                            move([3.5 + 58,3.5 + 49,5]) tube(h=2.5, od=6, id=2.8, center=false);
+                            move([3.5,3.5,5]) tube(h=1, od=7, id=2.8, center=false);
+                            move([3.5 + 58,3.5,5]) tube(h=1, od=7, id=2.8, center=false);
+                            move([3.5,3.5 + 49,5]) tube(h=1, od=7, id=2.8, center=false);
+                            move([3.5 + 58,3.5 + 49,5]) tube(h=1, od=7, id=2.8, center=false);
+                        }
+
+                        move([15,4,-3]) {
+                            // Internal stand-off, 2.5mm high
+                            move([3.5,3.5,6]) tube(h=1.5, od=6, id=2.8, center=false);
+                            move([3.5 + 58,3.5,6]) tube(h=1.5, od=6, id=2.8, center=false);
+                            move([3.5,3.5 + 49,6]) tube(h=1.5, od=6, id=2.8, center=false);
+                            move([3.5 + 58,3.5 + 49,6]) tube(h=1.5, od=6, id=2.8, center=false);
                         }
                     }
 
@@ -99,17 +107,10 @@ module lower_case()
                     }
 
                     move([15,4,-7]) {
-                        move([3.5,3.5,5]) cyl(h=5, d=5.2, center=false);
-                        move([3.5 + 58,3.5,5]) cyl(h=5, d=5.2, center=false);
-                        move([3.5,3.5 + 49,5]) cyl(h=5, d=5.2, center=false);
-                        move([3.5 + 58,3.5 + 49,5]) cyl(h=5, d=5.2, center=false);
-                    }
-
-                    move([15,4,-7]) {
-                        move([3.5,3.5,5]) cyl(h=3.5, d=7, center=false);
-                        move([3.5 + 58,3.5,5]) cyl(h=3.5, d=7, center=false);
-                        move([3.5,3.5 + 49,5]) cyl(h=3.5, d=7, center=false);
-                        move([3.5 + 58,3.5 + 49,5]) cyl(h=3.5, d=7, center=false);
+                        move([3.5,3.5,4.5]) cyl(h=5, d=5.2, center=false);
+                        move([3.5 + 58,3.5,4.5]) cyl(h=5, d=5.2, center=false);
+                        move([3.5,3.5 + 49,4.5]) cyl(h=5, d=5.2, center=false);
+                        move([3.5 + 58,3.5 + 49,4.5]) cyl(h=5, d=5.2, center=false);
                     }
 
                     // LED holes
