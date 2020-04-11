@@ -26,6 +26,8 @@ include <BOSL/constants.scad>
 use <BOSL/transforms.scad>
 use <BOSL/shapes.scad>
 
+// The connector cutouts are in a module so they can be common to both
+// the upper and lower case parts
 module connector_cutouts()
 {
     // Recess
@@ -61,6 +63,7 @@ module connector_cutouts()
     }
 }
 
+// Render the lower case part
 module lower_case()
 {
     // Lower case
@@ -96,33 +99,52 @@ module lower_case()
                     }
 
                     move([15,4,-7]) {
-                        move([3.5,3.5,5]) cyl(h=5, d=4.5, center=false);
-                        move([3.5 + 58,3.5,5]) cyl(h=5, d=4.5, center=false);
-                        move([3.5,3.5 + 49,5]) cyl(h=5, d=4.5, center=false);
-                        move([3.5 + 58,3.5 + 49,5]) cyl(h=5, d=4.5, center=false);
+                        move([3.5,3.5,5]) cyl(h=5, d=5.2, center=false);
+                        move([3.5 + 58,3.5,5]) cyl(h=5, d=5.2, center=false);
+                        move([3.5,3.5 + 49,5]) cyl(h=5, d=5.2, center=false);
+                        move([3.5 + 58,3.5 + 49,5]) cyl(h=5, d=5.2, center=false);
                     }
 
-                    // Remove material to allow mating with upper case
-                    move([0,0,9]) {
-                        difference() {
-                            move([0.75,0.75,-3]) cuboid([104 - 1.75, 64 - 1.75, 4], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
-                            move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
-                        }
+                    move([15,4,-7]) {
+                        move([3.5,3.5,5]) cyl(h=3.5, d=7, center=false);
+                        move([3.5 + 58,3.5,5]) cyl(h=3.5, d=7, center=false);
+                        move([3.5,3.5 + 49,5]) cyl(h=3.5, d=7, center=false);
+                        move([3.5 + 58,3.5 + 49,5]) cyl(h=3.5, d=7, center=false);
                     }
 
-                    // Clip recesses
-                    move([3.5,1.25,-1.75 + 8]) rotate([45,0,0]) cuboid([10,1,1], center=false);
-                    move([80.5,1.25,-1.75 + 8]) rotate([45,0,0]) cuboid([20,1,1], center=false);
-
-                    move([10,62.75 - 0.25,-1.75 + 8]) rotate([45,0,0]) cuboid([20,1,1], center=false);
-                    move([73,62.75 - 0.25,-1.75 + 8]) rotate([45,0,0]) cuboid([20,1,1], center=false);
-
-                    move([0.5,6,-0.75 + 8]) rotate([0,45,0]) cuboid([1,15,1], center=false);
-                    move([0.5,43,-0.75 + 8]) rotate([0,45,0]) cuboid([1,15,1], center=false);
+                    // LED holes
+                    move([-8 +15,7.85 +4,2.25 +4.5]) {
+                        xcyl(h=16, d = 2.05);
+                    }
+                    move([-8 +15,11.5 +4,2.25 +4.5]) {
+                        xcyl(h=16, d = 2.05);
+                    }
                 }
+            }
+
+            // Add a lip to mate with the upper case
+            move([-15,-4,3.5+2]) {
+                difference() {
+                    // Lip
+                    move([0.75,0.75,-2]) cuboid([104 - 1.5, 64 - 1.5, 2], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
+                    move([2,2,-3]) cuboid([104 - 4, 64 - 4, 4], center=false, fillet = 1, edges = EDGES_Z_ALL);
+                    move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
+                }
+
+                // Clips
+                move([3.5,1.25,-1.75]) rotate([45,0,0]) cuboid([10,1,1], center=false);
+                move([80.5,1.25,-1.75]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+
+                move([10,62.75,-1.75]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+                move([41.5,62.75,-1.75]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+                move([73,62.75,-1.75]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+
+                move([0.5,6,-1]) rotate([0,45,0]) cuboid([1,15,1], center=false);
+                move([0.5,43,-1]) rotate([0,45,0]) cuboid([1,15,1], center=false);
             }
         }
 
+        // Add the connector cutouts
         connector_cutouts();
 
         // SD card cutout
@@ -139,11 +161,25 @@ module lower_case()
         move([5,-7.25,2.5]) cuboid([12.5,1,2], center=false);
         move([5,6.25,2.5]) cuboid([12.5,1,2], center=false);
     }
+
+    // Light pipe mount for LEDs
+    difference() {
+        move([-7,9.65,0]) {
+            cuboid([13,7,4.5], chamfer = 1, edges= EDGE_TOP_BK+EDGE_TOP_FR);
+        }
+        
+        move([-8,7.85,2.25]) {
+            xcyl(h=16, d = 2.05);
+        }
+        move([-8,11.5,2.25]) {
+            xcyl(h=16, d = 2.05);
+        }
+    }
 }
 
-module upper_case()
+// Render the upper case part
+module upper_case(lift)
 {
-    lift = 0;
     // Upper case
     difference() {
         union() {
@@ -155,7 +191,7 @@ module upper_case()
                     move([2,2,-2]) cuboid([104 - 4, 64 - 4.5, 23], center=false, fillet = 1, edges = EDGES_Z_ALL);
 
                     // Screen cut out
-                    move([((104 - 90) / 2) + 3.5,((64 - 54) / 2),19]) cuboid([90 - 1.5, 54, 6], center=false, fillet = 1);
+                    move([((104 - 90) / 2) + 2.5,((64 - 54) / 2) - 0.25,19]) cuboid([90 - 1.5, 54, 6], center=false, fillet = 1);
                 }
             }
 
@@ -164,31 +200,32 @@ module upper_case()
 
             // Chamfer it at 45 degrees for easier printing
             move([32,-1.25,11.5+lift]) rotate([0,0,90]) right_triangle([1.5,64,1], center=false);
-
-            // Add a lip to mate with the lower case
-            move([-15,-4,3.5+lift]) {
-                difference() {
-                    // Lip
-                    move([0.75,0.75,-2]) cuboid([104 - 1.5, 64 - 1.5, 2], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
-                    move([2,2,-3]) cuboid([104 - 4, 64 - 4.5, 4], center=false, fillet = 1, edges = EDGES_Z_ALL);
-                    move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
-                }
-
-                // Clips
-                move([3.5,1.25,-1.75]) rotate([45,0,0]) cuboid([10,1,1], center=false);
-                move([80.5,1.25,-1.75]) rotate([45,0,0]) cuboid([20,1,1], center=false);
-
-                move([10,62.75,-1.75]) rotate([45,0,0]) cuboid([20,1,1], center=false);
-                move([73,62.75,-1.75]) rotate([45,0,0]) cuboid([20,1,1], center=false);
-
-                move([0.5,6,-0.75]) rotate([0,45,0]) cuboid([1,15,1], center=false);
-                move([0.5,43,-0.75]) rotate([0,45,0]) cuboid([1,15,1], center=false);
-            }
         }
+
+        // Remove material to allow mating with lower case
+        move([-15,-4,4.5 + lift]) {
+            difference() {
+                move([0.75,0.75,-3]) cuboid([104 - 1.75, 64 - 1.75, 4], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
+                move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
+            }
+
+            // Clip recesses
+            move([3.5,1.25,-1.75 + 1]) rotate([45,0,0]) cuboid([10,1,1], center=false);
+            move([80.5,1.25,-1.75 + 1]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+
+            move([10,62.75 - 0.25,-1.75 + 1]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+            move([41.5,62.75 - 0.25,-1.75 + 1]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+            move([73,62.75 - 0.25,-1.75 + 1]) rotate([45,0,0]) cuboid([20,1,1], center=false);
+
+            move([0.5,6,-1 + 1]) rotate([0,45,0]) cuboid([1,15,1], center=false);
+            move([0.5,43,-1 + 1]) rotate([0,45,0]) cuboid([1,15,1], center=false);
+        }
+
+        // Add the connector cutouts
         move([0,0,lift]) connector_cutouts();
 
-        // Air vents
-        hgh = 12;
+        // Air vents - back left and right
+        hgh = 14 + lift;
         offs1 = -10 + 12;
         move([0 + offs1,60,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
         move([5 + offs1,60,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
@@ -200,6 +237,12 @@ module upper_case()
         move([5 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
         move([10 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
         move([15 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
-    }
+
+        // Air vents connector side
+        move([0 + offs1 - 7,0,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([5 + offs1 - 7,0,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([10 + offs2 + 7,0,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([15 + offs2 + 7,0,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+    }    
 }
 

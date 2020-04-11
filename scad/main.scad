@@ -35,6 +35,9 @@ display_lower_case = "Yes"; // [Yes, No]
 display_pi4 = "Yes"; // [Yes, No]
 display_hyperpixel = "Yes"; // [Yes, No]
 
+// Lift the upper case?
+lift_upper_case = "Yes"; // [Yes, No]
+
 // Render the Raspberry Pi 4B board
 if (display_pi4 == "Yes") rasppi4b();
 
@@ -45,4 +48,5 @@ if (display_hyperpixel == "Yes") hyperpixel();
 if (display_lower_case == "Yes") lower_case();
 
 // Render the upper case
-if (display_upper_case == "Yes") upper_case();
+lift = (lift_upper_case == "Yes") ? 30:0;
+if (display_upper_case == "Yes") upper_case(lift);

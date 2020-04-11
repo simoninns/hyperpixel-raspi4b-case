@@ -83,12 +83,12 @@ module hyperpixel()
             // Glass of touchscreen (58.5x97)
             difference() {
                 color([0.1,0.1,0.1]) move([0,0,12]) cuboid([97, 58.5, 1], center=false);
-                color([0.1,0.1,0.1]) move([8.5,(58.5 - 51.8) / 2,12.5]) cuboid([86.4, 51.8, 0.6], center=false);
+                color([0.1,0.1,0.1]) move([7.5,(58.5 - 51.8) / 2,12.5]) cuboid([86.4, 51.8, 0.6], center=false);
             }
 
             // Actual screen is 86.4x51.8mm
             // offset is 7x3
-            color([0.2,0.2,0.2]) move([8.5,(58.5 - 51.8) / 2,12.5]) cuboid([86.4, 51.8, 0.5], center=false);
+            color([0.2,0.2,0.2]) move([7.5,(58.5 - 51.8) / 2,12.5]) cuboid([86.4, 51.8, 0.5], center=false);
 
             // Glass of screen
             color([0.3,0.3,0.3]) move([4,0,12-1]) cuboid([92, 58.5, 1], center=false);
