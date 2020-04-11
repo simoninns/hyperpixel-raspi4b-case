@@ -28,34 +28,21 @@ use <BOSL/shapes.scad>
 
 module connector_cutouts()
 {
-    // Power in
-    move([6.25,-3.5,1.5]) {
-        move([0,0,0]) cuboid([10,4,3.5], center=false, fillet = 1, edges=EDGES_Y_ALL);
-        move([-2,-1,-2]) cuboid([10 + 4,3,3.5+4], center=false, fillet = 1, edges=EDGES_Y_ALL);
+    // Recess
+    move([3.25,-11.5,-2.5]) cuboid([57,10,3.5+10], center=false, fillet = 1.5);
 
-        move([-2 - 0.5,-2,-2 - 0.25]) cuboid([10 + 5,3,3.5+5], center=false, fillet = 1);
-    }
+    // Power in
+    move([6.25,-3.5,1.5]) cuboid([10,4,3.5], center=false, fillet = 1, edges=EDGES_Y_ALL);
 
     // HDMI
     move([22,-3.5,1.5]) {
         move([0.5,0,-0.5]) cuboid([7.25,4,3.25], center=false, fillet = 0.5, edges=EDGES_Y_ALL);
         move([13.75,0,-0.5]) cuboid([7.25,4,3.25], center=false, fillet = 0.5, edges=EDGES_Y_ALL);
-        move([-2,-1,-2]) cuboid([25.5,3,3.5+4], center=false, fillet = 1, edges=EDGES_Y_ALL);
-
-        move([-2 - 0.5,-2,-2 - 0.25]) cuboid([25.5 + 1,3,3.5+5], center=false, fillet = 1);
     }
 
     // Audio
     move([51,-3.5,1.5]) {
         move([3.125,1,3.125]) rotate([90,0,0]) cyl(h=6, d=6.5);
-        move([-2,-1,-2]) cuboid([6.5 + 4,3,3.5+7], center=false, fillet = 1, edges=EDGES_Y_ALL);
-
-        move([-2 - 0.75,-2,-2 - 0.25]) cuboid([12,3,3.5+8], center=false, fillet = 1);
-    }
-
-    // Decoration
-    move([6.5,-3.5,11]) {
-        move([-2 - 0.5,-2,-2 - 0.25]) cuboid([42,3,2], center=false, fillet = 0.5);
     }
 
     // USB2
@@ -83,8 +70,8 @@ module lower_case()
                 difference() {
                     union() {
                         difference() {
-                            cuboid([104, 64, 8], center=false, chamfer = 2, edges = EDGES_Z_ALL+EDGES_BOTTOM);
-                            move([2,2,2]) cuboid([104 - 4, 64 - 4, 8], center=false, chamfer = 1, edges = EDGES_Z_ALL);
+                            cuboid([104, 64, 8], center=false, fillet = 2, edges = EDGES_Z_ALL);
+                            move([2,2,2]) cuboid([104 - 4, 64 - 4, 8], center=false, fillet = 1, edges = EDGES_Z_ALL);
                         }
 
                         // Add 1.5mm of thickness to the wall for side connectors
@@ -118,7 +105,7 @@ module lower_case()
                     // Remove material to allow mating with upper case
                     move([0,0,9]) {
                         difference() {
-                            move([0.75,0.75,-3]) cuboid([104 - 1.75, 64 - 1.75, 4], center=false, chamfer = 1.5, edges = EDGES_Z_ALL);
+                            move([0.75,0.75,-3]) cuboid([104 - 1.75, 64 - 1.75, 4], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
                             move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
                         }
                     }
@@ -139,11 +126,11 @@ module lower_case()
         connector_cutouts();
 
         // SD card cutout
-        move([-15,28.2,-5]) {
-            rounded_prismoid(size1=[40,17], size2=[8,8], h=5, shift=[9,0], r=2);
-        }
+        move([-7,28.2,-2.5]) cuboid([18,12.5,6]);
+        move([-7,28.2,-6.5]) cuboid([20,14.5,6], chamfer = 1);
     }
 
+    // SD card housing
     move([-15,28.2,-5]) {
         move([2,-6.25,2.5 + 3]) cuboid([12.5,12.5,1], center=false);
         move([2,-7.25,2.5]) cuboid([12.5,1,4], center=false, chamfer = 0.5, edges = EDGE_TOP_FR);
@@ -151,7 +138,6 @@ module lower_case()
 
         move([5,-7.25,2.5]) cuboid([12.5,1,2], center=false);
         move([5,6.25,2.5]) cuboid([12.5,1,2], center=false);
-        
     }
 }
 
@@ -163,14 +149,13 @@ module upper_case()
         union() {
             move([-15,-4,3.5 + lift]) {
                 difference() {
-                    cuboid([104, 64, 23], center=false, chamfer = 2, edges = EDGES_Z_ALL+EDGES_TOP);
-                    move([2,2,-2]) cuboid([104 - 4, 64 - 4, 23], center=false, chamfer = 1, edges = EDGES_Z_ALL);
+                    // Note: The back wall is .5mm thicker for support (as there are no connectors for it
+                    // to rest on)
+                    cuboid([104, 64, 23], center=false, fillet = 2, edges = EDGES_Z_ALL);
+                    move([2,2,-2]) cuboid([104 - 4, 64 - 4.5, 23], center=false, fillet = 1, edges = EDGES_Z_ALL);
 
                     // Screen cut out
-                    move([((104 - 90) / 2) + 2,((64 - 54) / 2),19]) cuboid([90 - 2, 54, 6], center=false);
-
-                    // Chamfer the display cutout
-                    move([((104 - 92) / 2) + 1,((64 - 56) / 2) -1,22]) cuboid([92, 58, 6], center=false, chamfer = 2);
+                    move([((104 - 90) / 2) + 3.5,((64 - 54) / 2),19]) cuboid([90 - 1.5, 54, 6], center=false, fillet = 1);
                 }
             }
 
@@ -184,18 +169,9 @@ module upper_case()
             move([-15,-4,3.5+lift]) {
                 difference() {
                     // Lip
-                    move([0.75,0.75,-2]) cuboid([104 - 1.5, 64 - 1.5, 2], center=false, chamfer = 1.5, edges = EDGES_Z_ALL);
-                    move([2,2,-3]) cuboid([104 - 4, 64 - 4, 4], center=false, chamfer = 1, edges = EDGES_Z_ALL);
+                    move([0.75,0.75,-2]) cuboid([104 - 1.5, 64 - 1.5, 2], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
+                    move([2,2,-3]) cuboid([104 - 4, 64 - 4.5, 4], center=false, fillet = 1, edges = EDGES_Z_ALL);
                     move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
-
-                    
-
-                    // union() {
-                    //     difference() {
-                    //         move([0,0,-1.25]) cuboid([104, 64, 0.5], center=false, chamfer = 1.5, edges = EDGES_Z_ALL);
-                    //         move([1.25,1.25,-3]) cuboid([104 - 2.5, 64 - 2.5, 4], center=false, chamfer = 1, edges = EDGES_Z_ALL);
-                    //     }
-                    // }
                 }
 
                 // Clips
@@ -210,6 +186,20 @@ module upper_case()
             }
         }
         move([0,0,lift]) connector_cutouts();
+
+        // Air vents
+        hgh = 12;
+        offs1 = -10 + 12;
+        move([0 + offs1,60,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([5 + offs1,60,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([10 + offs1,60,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([15 + offs1,60,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+
+        offs2 = 69 - 12;
+        move([0 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([5 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([10 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([15 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
     }
 }
 
