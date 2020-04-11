@@ -1,0 +1,48 @@
+/************************************************************************
+
+	main.scad
+    
+	Raspberry Pi 4B / Hyperpixel 4.0 case
+    Copyright (C) 2020 Simon Inns
+    
+    This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+    
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+    Email: simon.inns@gmail.com
+    
+************************************************************************/
+
+include <./rasppi4b/rasppi4b.scad>
+include <./hyperpixel/hyperpixel.scad>
+include <case.scad>
+
+// Rendering quality
+$fn = 20;
+
+// Choose what to display:
+display_upper_case = "Yes"; // [Yes, No]
+display_lower_case = "Yes"; // [Yes, No]
+display_pi4 = "Yes"; // [Yes, No]
+display_hyperpixel = "Yes"; // [Yes, No]
+
+// Render the Raspberry Pi 4B board
+if (display_pi4 == "Yes") rasppi4b();
+
+// Render the Hyperpixel 4.0 display
+if (display_hyperpixel == "Yes") hyperpixel();
+
+// Render the lower case
+if (display_lower_case == "Yes") lower_case();
+
+// Render the upper case
+if (display_upper_case == "Yes") upper_case();
