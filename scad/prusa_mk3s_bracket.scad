@@ -31,28 +31,31 @@ module frame_hook()
     move([0,100,0]) {
         difference() {
             cuboid([30,52,19], chamfer = 1.5);
-            move([0,4,6.5 - 2]) cuboid([52 + 2,45,12]);
+            move([0,4,6.5 - 2]) cuboid([52 + 2,46,12]);
         }
 
         // Bottom shelf
-        move([0,23,2.5]) cuboid([30,6,10], chamfer = 1.5, edges=EDGE_TOP_BK+EDGE_BK_LF+EDGE_BK_RT+EDGE_TOP_LF+EDGE_TOP_RT);
+        move([0,23.5,2.5]) cuboid([30,5,10], chamfer = 1.5, edges=EDGE_TOP_BK+EDGE_BK_LF+EDGE_BK_RT+EDGE_TOP_LF+EDGE_TOP_RT);
 
-        move([0,-20,7]) cuboid([30,6,5], chamfer = 1.5, edges=EDGE_TOP_BK+EDGE_TOP_LF+EDGE_TOP_RT+EDGE_BOT_BK); // Top lip
-        move([0,20,6]) cuboid([30-2,2,3], chamfer = 1); // Bottom lip
+        move([0,-20.5,7]) cuboid([30,6,5], chamfer = 1.5, edges=EDGE_TOP_BK+EDGE_TOP_LF+EDGE_TOP_RT+EDGE_BOT_BK); // Top lip
+        move([0,21,6]) cuboid([30-2,2,3], chamfer = 1); // Bottom lip
     }
+
+    // Test bit of frame
+    //move([0,1 + 100,6.5 - 5]) cuboid([52 + 2,40,6]);
 }
 
 module case_bracket()
 {
-    move([26,3.5,-9.5]) {
+    move([29.5,3.5,-8.5]) {
         difference() {
-            lugx = -22.5;
+            lugx = -26.1;
             union() {
-                move([-15,35,0]) cuboid([30,85,10], chamfer = 1.5);
+                move([-15,35,0]) cuboid([30,85,8], chamfer = 1.5, edges=EDGES_ALL-EDGE_TOP_LF);
 
                 // Mounting lugs
-                move([lugx,0,3 + 2.4]) cyl(h=4, d=7.8);
-                move([lugx,49,3 + 2.4]) cyl(h=4, d=7.8);
+                move([lugx,0,3 + 1.4]) cyl(h=4, d=7.8);
+                move([lugx,49,3 + 1.4]) cyl(h=4, d=7.8);
             }
 
             // Screw shaft holes
@@ -60,14 +63,17 @@ module case_bracket()
             move([lugx,49,3]) cyl(h=10, d=2.8);
 
             // Screw head recess holes
-            move([lugx,0,-12 + 8]) cyl(h=14, d=6);
-            move([lugx,49,-12 + 8]) cyl(h=14, d=6);
+            move([lugx,0,-12 + 10.5]) cyl(h=14, d=5);
+            move([lugx,49,-12 + 10.5]) cyl(h=14, d=5);
+
+            move([lugx - 2,0,-12 + 8]) cuboid([10, 5, 14]);
+            move([lugx - 2,49,-12 + 8]) cuboid([10, 5, 14]);
         }
     }
 }
 
 module prusa_mk3s_bracket()
 {
-    move([11,12,35]) rotate([-30,0,0]) frame_hook();
+    move([14.5,23,45]) rotate([-40,0,0]) frame_hook();
     case_bracket();
 }
