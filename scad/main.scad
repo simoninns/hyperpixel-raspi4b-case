@@ -25,6 +25,7 @@
 include <./rasppi4b/rasppi4b.scad>
 include <./hyperpixel/hyperpixel.scad>
 include <case.scad>
+include <prusa_mk3s_bracket.scad>
 
 // Rendering quality
 $fn = 20;
@@ -34,6 +35,7 @@ display_upper_case = "Yes"; // [Yes, No]
 display_lower_case = "Yes"; // [Yes, No]
 display_pi4 = "Yes"; // [Yes, No]
 display_hyperpixel = "Yes"; // [Yes, No]
+display_prusa_bracket = "Yes"; // [Yes, No]
 
 // Lift the upper case?
 lift_upper_case = "Yes"; // [Yes, No]
@@ -50,3 +52,6 @@ if (display_lower_case == "Yes") lower_case();
 // Render the upper case
 lift = (lift_upper_case == "Yes") ? 30:0;
 if (display_upper_case == "Yes") upper_case(lift);
+
+// Render the Prusa MK3S bracket
+if (display_prusa_bracket == "Yes") prusa_mk3s_bracket();
