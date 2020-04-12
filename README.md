@@ -27,6 +27,8 @@ If required the additional bracket (for the Prusa MK3S) can also be attached.  E
 
 The upper case is attached to the lower case by first lowering the connector-side of the case over the display (as it is too thick to be pressed straight down).  Then rotate the other side of the upper case over the display and clip the upper and lower cases together.
 
+The lower case provides two 1.8mm holes for the LEDs.  You can optionally use two short lengths of transparent/clear 1.75mm filament to act as light-pipes.  These can be glued in place (using superglue) into the mount in the lower case.  This allows a wider viewing angle for the LEDs.
+
 # Printing instructions
 
 ## Overview
