@@ -49,17 +49,17 @@ module connector_cutouts()
 
     // USB2
     move([85,1.25,1.25]) {
-        move([0,0,0]) cuboid([5,15.5,16.75], center=false, fillet = 0.5, edges=EDGES_X_ALL);
+        move([0,0,0]) cuboid([6,15.5,16.75], center=false, fillet = 0.5, edges=EDGES_X_ALL);
     }
 
     // USB3
     move([85,19.25,1.25]) {
-        move([0,0,0]) cuboid([5,15.5,16.75], center=false, fillet = 0.5, edges=EDGES_X_ALL);
+        move([0,0,0]) cuboid([6,15.5,16.75], center=false, fillet = 0.5, edges=EDGES_X_ALL);
     }
 
     // Ethernet
     move([85,37.5,1.25]) {
-        move([0,0,0]) cuboid([5,16.5,14.25], center=false, fillet = 0.5, edges=EDGES_X_ALL);
+        move([0,0,0]) cuboid([6,16.5,14.25], center=false, fillet = 0.5, edges=EDGES_X_ALL);
     }
 }
 
@@ -73,28 +73,30 @@ module lower_case()
                 difference() {
                     union() {
                         difference() {
-                            cuboid([104, 64, 8], center=false, fillet = 2, edges = EDGES_Z_ALL);
-                            move([2,2,2]) cuboid([104 - 4, 64 - 4, 8], center=false, fillet = 1, edges = EDGES_Z_ALL);
+                            move([-1,-1,0]) cuboid([105, 66, 8], center=false, fillet = 2, edges = EDGES_Z_ALL);
+                            move([2,2,2]) cuboid([104 - 5, 66 - 6, 8], center=false, fillet = 1, edges = EDGES_Z_ALL);
                         }
 
-                        // Add 1.5mm of thickness to the wall for side connectors
-                        move([15,2,0]) cuboid([64,1.5,8], center=false);
+                        union() {
+                        // Add 2.5mm of thickness to the wall for side connectors
+                        move([15,1,0]) cuboid([64,2.5,8], center=false);
 
                         // Pi stand-offs
                         move([15,4,-3]) {
-                            // Internal stand-off, 2.5mm high
-                            move([3.5,3.5,5]) tube(h=1, od=7.5, id=2.8, center=false);
-                            move([3.5 + 58,3.5,5]) tube(h=1, od=7.5, id=2.8, center=false);
-                            move([3.5,3.5 + 49,5]) tube(h=1, od=7.5, id=2.8, center=false);
-                            move([3.5 + 58,3.5 + 49,5]) tube(h=1, od=7.5, id=2.8, center=false);
+                            // Internal stand-off, 2.5mm high (screw dia 2.8mm)
+                            move([3.5,3.5,4]) cyl(h=2, d=10, center=false);
+                            move([3.5 + 58,3.5,4]) cyl(h=2, d=10, center=false);
+                            move([3.5,3.5 + 49,4]) cyl(h=2, d=10, center=false);
+                            move([3.5 + 58,3.5 + 49,4]) cyl(h=2, d=10, center=false);
                         }
 
                         move([15,4,-3]) {
                             // Internal stand-off, 2.5mm high
-                            move([3.5,3.5,6]) tube(h=1.5, od=6, id=2.8, center=false);
-                            move([3.5 + 58,3.5,6]) tube(h=1.5, od=6, id=2.8, center=false);
-                            move([3.5,3.5 + 49,6]) tube(h=1.5, od=6, id=2.8, center=false);
-                            move([3.5 + 58,3.5 + 49,6]) tube(h=1.5, od=6, id=2.8, center=false);
+                            move([3.5,3.5,6]) cyl(h=1.5, d=6, center=false);
+                            move([3.5 + 58,3.5,6]) cyl(h=1.5, d=6, center=false);
+                            move([3.5,3.5 + 49,6]) cyl(h=1.5, d=6, center=false);
+                            move([3.5 + 58,3.5 + 49,6]) cyl(h=1.5, d=6, center=false);
+                        }
                         }
                     }
 
@@ -107,18 +109,18 @@ module lower_case()
                     }
 
                     move([15,4,-7]) {
-                        move([3.5,3.5,4.5]) cyl(h=5, d=7, center=false);
-                        move([3.5 + 58,3.5,4.5]) cyl(h=5, d=7, center=false);
-                        move([3.5,3.5 + 49,4.5]) cyl(h=5, d=7, center=false);
-                        move([3.5 + 58,3.5 + 49,4.5]) cyl(h=5, d=7, center=false);
+                        move([3.5,3.5,4.5]) cyl(h=5, d=8, center=false);
+                        move([3.5 + 58,3.5,4.5]) cyl(h=5, d=8, center=false);
+                        move([3.5,3.5 + 49,4.5]) cyl(h=5, d=8, center=false);
+                        move([3.5 + 58,3.5 + 49,4.5]) cyl(h=5, d=8, center=false);
                     }
 
                     // LED holes
-                    move([-8 +15,7.85 +4,2.25 +4.5]) {
-                        xcyl(h=16, d = 2.05);
+                    move([-8 +14,7.85 +4,2.25 +4.5]) {
+                        xcyl(h=16, d = 1.8);
                     }
-                    move([-8 +15,11.5 +4,2.25 +4.5]) {
-                        xcyl(h=16, d = 2.05);
+                    move([-8 +14,11.5 +4,2.25 +4.5]) {
+                        xcyl(h=16, d = 1.8);
                     }
                 }
             }
@@ -127,13 +129,11 @@ module lower_case()
             move([-15,-4,3.5+2]) {
                 difference() {
                     // Lip
-                    move([0.75,0.75,-2]) cuboid([104 - 1.5, 64 - 1.5, 2], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
-                    move([2,2,-3]) cuboid([104 - 4, 64 - 4, 4], center=false, fillet = 1, edges = EDGES_Z_ALL);
+                    move([0.75,0.75,-2]) cuboid([104 - 2.5, 64 - 1.5, 2], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
+                    move([2,2,-3]) cuboid([104 - 5, 64 - 4, 4], center=false, fillet = 1, edges = EDGES_Z_ALL);
                     move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
-                    move([101,20,-2]) cuboid([3,28,3], center=false);
+                    move([100,6,-6.5]) cuboid([5,52,8], center=false); // Not around front connectors
                 }
-
-                
 
                 // Clips
                 move([3.5,1,-1.75]) rotate([45,0,0]) cuboid([10,1,1], center=false);
@@ -152,7 +152,7 @@ module lower_case()
         connector_cutouts();
 
         // SD card cutout
-        move([-7,28.2,-2.5]) cuboid([18,12.5,6]);
+        move([-8,28.2,-2.5]) cuboid([19,12.5,6]);
         move([-7,28.2,-6.5]) cuboid([20,14.5,6], chamfer = 1);
     }
 
@@ -166,17 +166,17 @@ module lower_case()
         move([5,6.25,2.5]) cuboid([12.5,1,2], center=false);
     }
 
-    // Light pipe mount for LEDs
+    // Light pipe mount for LEDs (use 1.75mm clear filament for pipes)
     difference() {
         move([-7,9.65,0]) {
             cuboid([13,7,4.5], chamfer = 1, edges= EDGE_TOP_BK+EDGE_TOP_FR);
         }
         
         move([-8,7.85,2.25]) {
-            xcyl(h=16, d = 2.05);
+            xcyl(h=16, d = 1.8);
         }
         move([-8,11.5,2.25]) {
-            xcyl(h=16, d = 2.05);
+            xcyl(h=16, d = 1.8);
         }
     }
 }
@@ -189,16 +189,15 @@ module upper_case(lift)
         union() {
             move([-15,-4,3.5 + lift]) {
                 difference() {
-                    cuboid([104, 64, 23], center=false, fillet = 2, edges = EDGES_Z_ALL);
-                    move([2,2,-2]) cuboid([104 - 4, 64 - 4, 23], center=false, fillet = 1, edges = EDGES_Z_ALL);
+                    move([-1,-1,0]) cuboid([105, 66, 23], center=false, fillet = 2, edges = EDGES_Z_ALL);
+                    move([2,2,-2]) cuboid([104 - 5, 66 - 6, 23], center=false, fillet = 1, edges = EDGES_Z_ALL);
 
                     // Screen cut out
-                    move([((104 - 90) / 2) + 4,((64 - 54) / 2) - 0.25,19]) cuboid([90 - 1.5, 54, 6], center=false, fillet = 1);
-                }
+                    move([((104 - 90) / 2) + 4 - 2,((64 - 54) / 2) - 0.25 - 2,20.9]) cuboid([90 - 1.5 + 4, 54 + 4, 8], center=false, chamfer = 2);
 
-                // Add some addition strength to the front connector columns
-                move([102,31.12,8]) cuboid([1.5,20.75,16]);
-                move([102.25,31.12 - (20.75 /2),16]) rotate([0,-90,0]) right_triangle([1,20.75,1]);
+                    // Square the inner edge of the cutout
+                    move([((104 - 90) / 2) + 4 - 0.5,((64 - 54) / 2) - 0.25 - 0.5,19]) cuboid([90 - 1.5 + 1, 54 + 1, 6], center=false, chamfer = 0.5);
+                }
             }
 
             // Add 1.5mm of thickness to the wall for side connectors
@@ -211,12 +210,9 @@ module upper_case(lift)
         // Remove material to allow mating with lower case
         move([-15,-4,4.5 + lift]) {
             difference() {
-                move([0.75,0.75,-3]) cuboid([104 - (0.75 * 2), 64 - (0.75 * 2), 4], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
+                move([0.75,0.75,-3]) cuboid([104 - 2.5, 64 - 1.5, 4], center=false, fillet = 1.5, edges = EDGES_Z_ALL);
                 move([15,0,-6.5]) cuboid([64,5,8], center=false); // Not around side connectors
-
-                // Strengthen around USB columns
-                move([102.25,22,0]) cuboid([2,2.5,2]);
-                move([102.25,40.125,0]) cuboid([2,2.75,2]);
+                move([100,6,-6.5]) cuboid([5,51,8], center=false); // Not around front connectors
             }
 
             // Clip recesses
@@ -249,10 +245,10 @@ module upper_case(lift)
         move([15 + offs2,60,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
 
         // Air vents connector side
-        move([0 + offs1 - 7,0,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
-        move([5 + offs1 - 7,0,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
-        move([10 + offs2 + 7,0,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
-        move([15 + offs2 + 7,0,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([0 + offs1 - 7,-1,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([5 + offs1 - 7,-1,hgh]) rotate([0,30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([10 + offs2 + 7,-1,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
+        move([15 + offs2 + 7,-1,hgh]) rotate([0,-30,0]) cuboid([2,10,18], fillet = 1, edges=EDGES_Y_ALL);
     }
 }
 
