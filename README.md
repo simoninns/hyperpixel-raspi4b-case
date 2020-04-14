@@ -67,9 +67,20 @@ The OpenSCAD source files provide a parameter interface that allows you to rende
 * Infill: 15%
 * Supports: Everywhere
 * Print time (approximate): 1h 49m
-* Notes: None
+* Notes: Fits Prusa i3 MK3S and MMU2S
 
 <img src="/images/render/bracket.png" width="800">
+
+### Desk stand
+* Number required: 2
+* Material: Prusament PETG (Prusa Orange)
+* Layer: 0.20mm (Quality)
+* Infill: 15%
+* Supports: Everywhere
+* Print time (approximate): 1h 1m
+* Notes: Places the screen at a 30 degree angle for ease of use on a desk.
+
+<img src="/images/render/desk-stand.png" width="800">
 
 # Author
 
